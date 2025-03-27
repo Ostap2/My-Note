@@ -1,15 +1,15 @@
 {
-  "name": "your-project-name",
+  "name": "my-note",
   "private": true,
   "version": "0.0.0",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d client/dist",
     "start": "npm run dev --prefix client",
     "build": "npm run build --prefix client",
     "lint": "npm run lint --prefix client"
   },
-  "homepage": "https://Ostap2.github.io/My-Note",
+  "homepage": "https://Ostap2.github.io/my-note",
   "dependencies": {
     "gh-pages": "^6.3.0"
   }
