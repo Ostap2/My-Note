@@ -1,0 +1,145 @@
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .modal {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between; 
+    width: 600px;
+    min-height: 600px;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .modal h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  .mb-2 {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border 0.3s;
+  }
+  
+  .modal input:focus,
+  .modal textarea:focus {
+    border-color: #3498db;
+    outline: none;
+  }
+  
+  .modal-close {
+    font-size: 1.5rem;
+    background: none;
+    border: #333;
+    color: #333;
+    cursor: pointer;
+    height: 50px;
+    width: 50px;
+  }
+  
+  .modal .button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+
+  .modal button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .modal button:hover {
+    background-color: #2980b9;
+  }
+  
+  .modal button:active {
+    background-color: #1c5985;
+  }
+  
+  .modal .cancel-button {
+    background-color: #e74c3c;
+  }
+  
+  .modal .cancel-button:hover {
+    background-color: #c0392b;
+  }
+  
+  .modal .cancel-button:active {
+    background-color: #a93226;
+  }
+
+  .Delete {
+    margin-top: auto; 
+    background-color: #e74c3c;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .Delete:hover {
+    background-color: #c0392b;
+  }
+  
+  .Delete:active {
+    background-color: #a93226;
+  }
+  .cancel {
+    margin-right: 30px;
+  }

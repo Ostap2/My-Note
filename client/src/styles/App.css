@@ -1,0 +1,72 @@
+
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  height: 100px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #333;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+button:active {
+  background-color: #1c5985;
+}
+
+
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 400px); 
+  gap: 20px;
+  justify-items: center; 
+  justify-content: center; 
+  margin-top: 20px;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+    justify-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    justify-items: center;
+  }
+}
+
+.logo {
+  margin-left: 24px;
+}
+
+.button-add-note {
+  margin-right: 24px;
+}
+

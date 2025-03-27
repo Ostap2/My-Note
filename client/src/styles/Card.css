@@ -1,0 +1,36 @@
+
+.card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 400px;
+    height: 400px;
+    overflow: hidden; 
+  }
+  
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+    word-wrap: break-word; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .card p {
+    font-size: 40px;
+    color: #666;
+  word-wrap: break-word; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  }
+  
