@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import Button from "./components/Button";
 import Card from "./components/Card";
 import Modal from "./components/Modal";
@@ -17,26 +20,22 @@ export default function NotesApp() {
   const [modalView, setModalView] = useState(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [checkboxes, setCheckboxes] = useState([]); 
-
+  const [checkboxes, setCheckboxes] = useState([]);
 
   const addCheckbox = () => {
     setCheckboxes([...checkboxes, { label: "", checked: false }]);
   };
-
 
   const removeCheckbox = (index) => {
     const newCheckboxes = checkboxes.filter((_, idx) => idx !== index);
     setCheckboxes(newCheckboxes);
   };
 
-
   const handleCheckboxChange = (index, value, checked) => {
     const newCheckboxes = [...checkboxes];
     newCheckboxes[index] = { label: value, checked };
     setCheckboxes(newCheckboxes);
   };
-
 
   const addNote = () => {
     if (title.trim() && content.trim()) {
@@ -46,26 +45,28 @@ export default function NotesApp() {
         content,
         checkboxes: checkboxes.filter(checkbox => checkbox.label.trim() !== ""),
       };
-      setNotes([...notes, newNote]);
-      setTitle(""); 
+      const updatedNotes = [...notes, newNote];
+      setNotes(updatedNotes);
+      setTitle("");
       setContent("");
-      setCheckboxes([]); 
-      setModalOpen(false); 
+      setCheckboxes([]);
+      setModalOpen(false);
 
- 
-      localStorage.setItem("notes", JSON.stringify([...notes, newNote]));
+      localStorage.setItem("notes", JSON.stringify(updatedNotes));
+      toast.success("Note added successfully!");
+    } else {
+      toast.error("Please fill in the title and content!");
     }
   };
-
 
   const deleteNote = (id) => {
     const updatedNotes = notes.filter(note => note.id !== id);
     setNotes(updatedNotes);
-    setModalView(null); 
+    setModalView(null);
 
     localStorage.setItem("notes", JSON.stringify(updatedNotes));
+    toast.info("Note deleted.");
   };
-
 
   const loadNotes = () => {
     const storedNotes = localStorage.getItem("notes");
@@ -74,31 +75,27 @@ export default function NotesApp() {
     }
   };
 
-
   const loadCheckboxes = () => {
     const storedNotes = JSON.parse(localStorage.getItem("notes"));
     if (storedNotes) {
-      const lastNote = storedNotes[storedNotes.length - 1]; 
+      const lastNote = storedNotes[storedNotes.length - 1];
       if (lastNote && lastNote.checkboxes) {
         setCheckboxes(lastNote.checkboxes);
       }
     }
   };
 
-
   useEffect(() => {
     loadNotes();
     loadCheckboxes();
   }, []);
-
 
   const handleCheckboxStateChange = (index, checked) => {
     const newCheckboxes = [...modalView.checkboxes];
     newCheckboxes[index].checked = checked;
     setModalView({ ...modalView, checkboxes: newCheckboxes });
 
-  
-    const updatedNotes = notes.map((note) => 
+    const updatedNotes = notes.map((note) =>
       note.id === modalView.id ? { ...note, checkboxes: newCheckboxes } : note
     );
     setNotes(updatedNotes);
@@ -107,11 +104,14 @@ export default function NotesApp() {
 
   return (
     <div className="p-6 max-w-2xl mx-auto">
+      <ToastContainer position="top-right" autoClose={3000} />
+
       <header className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold logo">My Notes</h1>
-        <Button onClick={() => setModalOpen(true)} className="button-add-note">Add Note</Button>
+        <Button onClick={() => setModalOpen(true)} className="button-add-note">
+          Add Note
+        </Button>
       </header>
-
 
       {notes.length === 0 ? (
         <div className="flex justify-center items-center h-64 text-center text-gray-500">
@@ -123,7 +123,7 @@ export default function NotesApp() {
             <Card
               key={note.id}
               title={note.title}
-              description={note.content.substring(0, 100)} 
+              description={note.content.substring(0, 100)}
               className="cursor-pointer p-4"
               onClick={() => setModalView(note)}
             />
@@ -147,15 +147,16 @@ export default function NotesApp() {
           className="mt-2 mb-4"
         />
 
-
         <div className="mb-4">
-          <h3 className="">Checkboxes</h3>
+          <h3>Checkboxes</h3>
           {checkboxes.map((checkbox, index) => (
-            <div key={index} className="">
+            <div key={index} className="mb-2">
               <input
                 type="text"
-                value={checkbox.label || ""} 
-                onChange={(e) => handleCheckboxChange(index, e.target.value, checkbox.checked)}
+                value={checkbox.label || ""}
+                onChange={(e) =>
+                  handleCheckboxChange(index, e.target.value, checkbox.checked)
+                }
                 placeholder={`Checkbox ${index + 1}`}
                 className="border p-2 rounded mr-2 input-checkboxes"
               />
@@ -178,7 +179,9 @@ export default function NotesApp() {
         </div>
 
         <div className="flex justify-end gap-2">
-          <Button variant="outline" onClick={() => setModalOpen(false)} className="cancel">Cancel</Button>
+          <Button variant="outline" onClick={() => setModalOpen(false)} className="cancel">
+            Cancel
+          </Button>
           <Button onClick={addNote}>Save</Button>
         </div>
       </Modal>
@@ -187,17 +190,18 @@ export default function NotesApp() {
       {modalView && (
         <Modal isOpen={true} onClose={() => setModalView(null)}>
           <h2 className="text-xl font-semibold mb-4">{modalView.title}</h2>
-
           <p className="mb-4">{modalView.content}</p>
 
           <div className="mt-2">
             {modalView.checkboxes.map((checkbox, index) => (
-              <div key={index} className="flex items-center">
+              <div key={index} className="flex items-center mb-1">
                 <input
                   type="checkbox"
                   id={`checkbox-${index}`}
                   checked={checkbox.checked}
-                  onChange={(e) => handleCheckboxStateChange(index, e.target.checked)}
+                  onChange={(e) =>
+                    handleCheckboxStateChange(index, e.target.checked)
+                  }
                 />
                 <label htmlFor={`checkbox-${index}`} className="ml-2">
                   {checkbox.label}
@@ -205,7 +209,14 @@ export default function NotesApp() {
               </div>
             ))}
           </div>
-          <Button variant="destructive" onClick={() => deleteNote(modalView.id)} className="Delete">Delete</Button>
+
+          <Button
+            variant="destructive"
+            onClick={() => deleteNote(modalView.id)}
+            className="Delete mt-4"
+          >
+            Delete
+          </Button>
         </Modal>
       )}
     </div>
